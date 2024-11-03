@@ -1,3 +1,13 @@
 <div class="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
   <h1>Home#index</h1>
+  <div>
+    <div class="mt-4 text-sm text-gray-500 sm:mt-0">
+      <% if authenticated? %>
+        <h2><%= authenticated?.user.email_address %></h2>
+        <%= button_to 'Logout', session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Login", new_session_path, class: "text-gray" %>
+      <% end %>
+    </div>
+  </div>
 </div>
