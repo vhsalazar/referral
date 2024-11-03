@@ -11,7 +11,19 @@ class User < ApplicationRecord
 
   attr_accessor :referer_code
 
-  validate :valdiate_referer_code, if: -> { referer_code.present? && !persisted? }
+  validate :validate_referer_code, if: -> { referer_code.presence && !persisted? }
+
+  before_create :generate_referral_code
+
+  private
+
+  def generate_referral_code
+    begin
+      code = SecureRandom.hex(6)[..6]
+    end while User.exists?(referral_code: code)
+
+    self.referral_code = code
+  end
 
   def validate_referer_code
     referrer = User.find_by(referral_code: referer_code)
