@@ -11,7 +11,8 @@ class RegistrationsController < ApplicationController
       start_new_session_for @user
       redirect_to root_path, notice: "Successfully signed up!"
     else
-      render :new
+      flash.now[:alert] = "There was a problem with your registration."
+      render :new, status: :unprocessable_entity
     end
   end
 
