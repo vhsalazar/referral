@@ -39,4 +39,19 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  context 'referer_code' do
+    it 'is invalid if referer_code does not exist' do
+      user = build(:user, referer_code: 'invalid_code')
+      user.validate
+      expect(user.errors[:referer_code]).to include("is invalid")
+    end
+
+    it 'is valid if referer_code exists' do
+      referrer = create(:user)
+      user = build(:user, referer_code: referrer.referral_code)
+      user.validate
+      expect(user.errors[:referer_code]).to be_empty
+    end
+  end
 end
