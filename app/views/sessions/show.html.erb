@@ -1,0 +1,66 @@
+<div class="mx-auto md:w-2/3 w-full">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="p6 overflow-hidden bg-white shadow sm:rounded-lg">
+            <div class="px-4 py-6 sm:px-6">
+                <h3 class="text-base/7 font-semibold text-gray-900">Profile</h3>
+                <p class="mt-1 max-w-2xl text-sm/6 text-gray-500"><%= current_user.email_address %></p>
+            </div>
+            <div class="border-t border-gray-100">
+                <dl class="divide-y divide-gray-100">
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">ID</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"><%= current_user.id %></dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Email</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"><%= current_user.email_address %></dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Status</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"><%= current_user.status.capitalize %></dd>
+                </div>
+                <% if current_user.referred_by_id %>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Referred By</dt>
+                    <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"><%= current_user.referred_by.email_address %></dd>
+                </div>
+                <% end %>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Referral Code</dt>
+                    <dd>
+                        <p><strong><%= current_user.referral_code %></strong></p>
+                        <p>
+                        <%= link_to 'Share me', new_registration_url(params: {q: current_user.referral_code}), target: "_blank" %>
+                        </p>
+                    </dd>
+                </div>
+                </dl>
+            </div>
+        </div>
+
+
+
+        <div class="p2 overflow-hidden bg-white shadow sm:rounded-lg">
+            <div class="px-4 py-6 sm:px-6">
+                <h3 class="text-base/7 font-semibold text-gray-900">Referrals</h3>
+                <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">&nbsp</p>
+            </div>
+            <div class="border-t border-gray-100">
+                <dl class="divide-y divide-gray-100">
+                    <% if @referrals.empty? %>
+                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900">No referrals yet</dt>
+                        </div> 
+                    <% end %>
+                    <% @referrals.each do |referral| %>
+                        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-900">Email:</dt>
+                            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"><%= referral.email_address %></dd>
+                        </div>
+                    <% end %>                    
+                </dl>
+            </div>
+        </div>
+    </div>
+
+</div>
