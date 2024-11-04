@@ -1,11 +1,11 @@
 class User < ApplicationRecord
+  REFERRAL_CODE_LENGTH = 6
   enum :status, { bronze: 0, silver: 1, gold: 2, platinum: 3 }
   has_secure_password
 
   belongs_to :referred_by, class_name: "User", optional: true
   has_many :referrals, class_name: "User", foreign_key: "referred_by_id"
   has_many :sessions, dependent: :destroy
-  # enum status: { pending: 0, approved: 1, unapproved: 2 }
 
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
   def generate_referral_code
     begin
-      code = SecureRandom.hex(6)[..6]
+      code = SecureRandom.hex(6)[...REFERRAL_CODE_LENGTH]
     end while User.exists?(referral_code: code)
 
     self.referral_code = code
