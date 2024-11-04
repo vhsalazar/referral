@@ -2,7 +2,7 @@ class RegistrationsController < ApplicationController
   allow_unauthenticated_access
 
   def new
-    @user = User.new
+    @user = User.new(referer_code: params[:referer_code])
   end
 
   def create
