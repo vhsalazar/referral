@@ -38,6 +38,15 @@ RSpec.describe User, type: :model do
         expect(user.referral_code.length).to eq(User::REFERRAL_CODE_LENGTH)
       end
     end
+
+    context 'when the referralc_code already exists' do
+      it 'does not allow duplicates' do
+        user1 = create(:user)
+        user2 = create(:user)
+        user2.referral_code = user1.referral_code
+        expect { user2.save! }.to raise_error(ActiveRecord::RecordNotUnique)
+      end
+    end
   end
 
   context 'referer_code' do
