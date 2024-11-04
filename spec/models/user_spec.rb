@@ -29,4 +29,14 @@ RSpec.describe User, type: :model do
       it { is_expected.to validate_presence_of(:password_digest) }
     end
   end
+
+  describe 'referral_code' do
+    context 'when creating a new user' do
+      it 'generates a referral_code' do
+        user = create(:user)
+        expect(user.referral_code).to be_present
+        expect(user.referral_code.length).to eq(User::REFERRAL_CODE_LENGTH)
+      end
+    end
+  end
 end
