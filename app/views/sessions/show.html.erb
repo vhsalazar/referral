@@ -30,7 +30,7 @@
                     <dd>
                         <p><strong><%= current_user.referral_code %></strong></p>
                         <p>
-                        <%= link_to 'Share me', new_registration_url(params: {q: current_user.referral_code}), target: "_blank" %>
+                        <%= link_to 'Share me', new_registration_url(params: {referer_code: current_user.referral_code}), target: "_blank" %>
                         </p>
                     </dd>
                 </div>
@@ -38,11 +38,9 @@
             </div>
         </div>
 
-
-
         <div class="p2 overflow-hidden bg-white shadow sm:rounded-lg">
             <div class="px-4 py-6 sm:px-6">
-                <h3 class="text-base/7 font-semibold text-gray-900">Referrals</h3>
+                <h3 class="text-base/7 font-semibold text-gray-900">Referrals (<%= @referrals.count %>)</h3>
                 <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">&nbsp</p>
             </div>
             <div class="border-t border-gray-100">
@@ -54,7 +52,6 @@
                     <% end %>
                     <% @referrals.each do |referral| %>
                         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                            <dt class="text-sm font-medium text-gray-900">Email:</dt>
                             <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0"><%= referral.email_address %></dd>
                         </div>
                     <% end %>                    
