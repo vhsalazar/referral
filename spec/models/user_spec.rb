@@ -24,10 +24,6 @@ RSpec.describe User, type: :model do
       it { is_expected.not_to allow_value("somebody.domain.com").for(:email_address) }
       it { is_expected.to validate_uniqueness_of(:email_address).case_insensitive }
     end
-
-    xcontext 'password' do
-      it { is_expected.to validate_presence_of(:password_digest) }
-    end
   end
 
   describe 'referral_code' do
